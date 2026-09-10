@@ -1,0 +1,55 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include "image.h"
+
+/*
+ * image.c
+ *
+ * Responsible for:
+ * - opening image files
+ * - parsing BMP headers
+ * - reading pixel data
+ * - writing modified images
+ *
+ * VERY IMPORTANT:
+ * Be careful with memory allocation here.
+ *
+ * This file will probably be one of the biggest sources
+ * of bugs early on.
+ */
+
+Image *load_bmp(const char *filename)
+{
+    /*
+     * TODO:
+     * - fopen()
+     * - read BMP headers
+     * - allocate memory
+     * - read pixel bytes
+     */
+
+    return NULL;
+}
+
+int save_bmp(const char *filename, Image *image)
+{
+    /*
+     * TODO:
+     * - fopen()
+     * - write BMP headers
+     * - write pixel data
+     */
+
+    return 0;
+}
+
+void free_image(Image *image)
+{
+    /*
+     * TODO:
+     * free:
+     * - pixel data
+     * - image struct
+     */
+
+}

@@ -1,0 +1,12 @@
+*.o
+*.gcda
+*.gcno
+*.gcov
+
+steg
+tests
+
+results/
+build/
+
+vgcore.*

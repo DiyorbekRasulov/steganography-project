@@ -1,0 +1,47 @@
+#ifndef IMAGE_H
+#define IMAGE_H
+
+#include <stdint.h>
+
+/*
+ * image.h
+ *
+ * Handles image loading/saving.
+ *
+ * Start with BMP files because they are MUCH easier
+ * to work with than PNG.
+ *
+ * PNG compression makes byte-level manipulation harder.
+ *
+ * Eventually:
+ * - BMP support first
+ * - PNG support later
+ */
+
+typedef struct
+{
+    uint8_t *data;
+
+    int width;
+    int height;
+    int channels;
+
+    int size;
+} Image;
+
+/*
+ * Loads image bytes into memory.
+ */
+Image *load_bmp(const char *filename);
+
+/*
+ * Saves image bytes back to disk.
+ */
+int save_bmp(const char *filename, Image *image);
+
+/*
+ * Frees allocated image memory.
+ */
+void free_image(Image *image);
+
+#endif
