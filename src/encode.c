@@ -1,31 +1,47 @@
-#include <stdio.h>
 #include "encode.h"
+#include "utils.h"
 
 /*
  * encode.c
  *
- * Actual bit manipulation happens here.
+ * one of the two files that actually matter
  *
- * This is one of the core files of the project.
- *
- * Goals:
- * - modify image bytes safely
- * - preserve image quality
- * - support arbitrary file data later
+ * the caller has already checked capacity, but this checks again
+ * because a function that walks a buffer should not trust somebody
+ * else to have kept it in bounds
  */
 
-int encode_data(Image *image,
-                uint8_t *secret_data,
-                int secret_size)
+StegStatus encode_data(Image *image, const uint8_t *blob, size_t blob_size)
 {
-    /*
-     * TODO:
-     * - loop through secret bytes
-     * - extract bits
-     * - modify image LSBs
-     * - track image position
-     * - avoid overflow
-     */
+    if (image == NULL || blob == NULL)
+    {
+        return STEG_ERR_USAGE;
+    }
 
-    return 0;
+    size_t available = image_usable_bytes(image);
+
+    /* one carrier byte holds one bit so we need eight per payload byte */
+    if (blob_size > available / 8)
+    {
+        return STEG_ERR_CAPACITY;
+    }
+
+    size_t position = 0;
+
+    for (size_t i = 0; i < blob_size; i++)
+    {
+        /* walk the byte from its highest bit down to its lowest */
+        for (int bit = 0; bit < 8; bit++)
+        {
+            uint8_t value = get_bit(blob[i], bit);
+
+            uint8_t *target = image_byte_at(image, position);
+
+            *target = set_lsb(*target, value);
+
+            position++;
+        }
+    }
+
+    return STEG_OK;
 }

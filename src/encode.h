@@ -1,30 +1,31 @@
 #ifndef ENCODE_H
 #define ENCODE_H
 
+#include <stddef.h>
 #include <stdint.h>
+
 #include "image.h"
+#include "status.h"
 
 /*
  * encode.h
  *
- * Contains the actual steganography encoding logic.
+ * the actual steganography, least significant bit embedding
  *
- * We will probably use:
- * Least Significant Bit (LSB) encoding first.
+ * every colour value in the image is one byte, so changing the
+ * bottom bit moves that colour by one step out of two hundred
+ * and fifty six, which the eye cannot pick up
  *
- * Example:
- * Original byte:
+ * original byte
  * 10110100
  *
- * Hide bit '1':
+ * hide a 1 in it
  * 10110101
  *
- * Only the last bit changes,
- * so the image change is visually invisible.
+ * only the last bit moved so the picture looks identical
  */
 
-int encode_data(Image *image,
-                uint8_t *secret_data,
-                int secret_size);
+// writes every bit of blob into the bottom bits of the image
+StegStatus encode_data(Image *image, const uint8_t *blob, size_t blob_size);
 
 #endif
