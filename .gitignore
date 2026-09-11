@@ -1,12 +1,16 @@
+# build output
+build/
+steg
+
+# object files and coverage data
 *.o
 *.gcda
 *.gcno
 *.gcov
 
-steg
-tests
+# editor backups
+*~
+*.swp
 
-results/
-build/
-
-vgcore.*
+# generated during testing
+*.out
