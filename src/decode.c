@@ -46,8 +46,7 @@ StegStatus decode_bytes(const Image *image,
              * types to signed int before shifting, and the compiler is
              * right to complain about that changing the sign
              */
-            unsigned int shifted = ((unsigned int)rebuilt << 1) |
-                                   ((unsigned int)*source & 1u);
+            unsigned int shifted = ((unsigned int)rebuilt << 1) | ((unsigned int)*source & 1u);
 
             rebuilt = (uint8_t)shifted;
 
